@@ -5,17 +5,16 @@ from werkzeug.utils import secure_filename
 import base64
 from io import BytesIO
 import os
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.getenv("SECRET_KEY", os.urandom(24))  # You can also set this in a .env file
 
-# MongoDB Atlas connection
-MONGO_URI = os.getenv("MONGO_ATLAS_URI")
+# Fixed secret key (DO NOT expose this in public repos if used in production)
+app.secret_key = os.urandom(24)
+
+# MongoDB Atlas connection using environment variable or fallback
+MONGO_URI = os.getenv("MONGO_URI", "your-default-fallback-uri")
 client = MongoClient(MONGO_URI)
+
 db = client["user_auth"]
 users_collection = db["users"]
 images_collection = db["images"]
@@ -98,4 +97,5 @@ def image(image_id):
                      download_name=image_doc["filename"])
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)

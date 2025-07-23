@@ -1,0 +1,18 @@
+<h2>Hi {{ user }}!</h2>
+
+<form method="POST" action="/upload" enctype="multipart/form-data">
+    <input type="file" name="image" required>
+    <button type="submit">Upload Image</button>
+</form>
+
+<h3>Your Uploaded Images:</h3>
+{% for img in images %}
+    <div style="margin-bottom: 15px;">
+        <img src="/image/{{ img._id }}" width="200" />
+        <p>{{ img.filename }}</p>
+    </div>
+{% else %}
+    <p>No images uploaded yet.</p>
+{% endfor %}
+
+<br><a href="/logout">Logout</a>

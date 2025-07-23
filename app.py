@@ -7,11 +7,13 @@ from io import BytesIO
 import os
 
 app = Flask(__name__)
-app.secret_key = os.getenv("SECRET_KEY", os.urandom(24))
 
+# Fixed secret key (DO NOT expose this in public repos if used in production)
+app.secret_key = "aVerySecretKeyThatShouldBeRandom123!"
 
-# MongoDB Atlas connection
-client = MongoClient(os.getenv("MONGO_URI"))
+# MongoDB Atlas connection using environment variable or fallback
+MONGO_URI = os.getenv("MONGO_URI", "your-default-fallback-uri")
+client = MongoClient(MONGO_URI)
 
 db = client["user_auth"]
 users_collection = db["users"]
@@ -93,7 +95,7 @@ def image(image_id):
     return send_file(BytesIO(base64.b64decode(image_doc["data"])),
                      mimetype=image_doc["content_type"],
                      download_name=image_doc["filename"])
-                     
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)

@@ -7,7 +7,8 @@ from io import BytesIO
 import os
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = os.getenv("SECRET_KEY", os.urandom(24))
+
 
 # MongoDB Atlas connection
 client = MongoClient(os.getenv("MONGO_URI"))

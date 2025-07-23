@@ -10,7 +10,8 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # MongoDB Atlas connection
-client = MongoClient("MONGO_URI")
+client = MongoClient(os.getenv("MONGO_URI"))
+
 db = client["user_auth"]
 users_collection = db["users"]
 images_collection = db["images"]

@@ -16,7 +16,7 @@ app.secret_key = os.urandom(24)
 username = quote_plus("rshic14")
 password = quote_plus("7WJ2QBIsL4bxZkW2")
 uri = f"mongodb+srv://{username}:{password}@cluster0.cklkufm.mongodb.net/user_auth?retryWrites=true&w=majority&tls=true"
-client = MongoClient(MONGO_URI)
+client = MongoClient(uri)
 
 db = client["user_auth"]
 users_collection = db["users"]

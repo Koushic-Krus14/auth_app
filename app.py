@@ -6,7 +6,9 @@ import base64
 from io import BytesIO
 import os
 
+
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 client = MongoClient(os.environ['MONGODB_URI'])  # Get from Render env vars
 db = client["user_auth"]
 users_collection = db["users"]

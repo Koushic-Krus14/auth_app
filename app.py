@@ -12,6 +12,10 @@ uri = "mongodb+srv://rshic14:7WJ2QBIsL4bxZkW2@cluster0.cklkufm.mongodb.net/?retr
 # Create a new client and connect to the server
 client = MongoClient(uri)
 # MongoDB Atlas connection
+client.admin.command('ping')
+print("Pinged your deployment. You successfully connected to MongoDB!")
+
+
 db = client["user_auth"]
 users_collection = db["users"]
 images_collection = db["images"]

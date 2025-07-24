@@ -11,4 +11,5 @@ def home():
     return "Connected to MongoDB!"
 
 if __name__ == "__main__":
-    app.run()
+    port = int(os.environ.get("PORT", 10000))  # Default to 10000
+    app.run(host="0.0.0.0", port=port)

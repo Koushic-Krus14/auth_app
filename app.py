@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session, send_file
 from pymongo import MongoClient
 from bson import ObjectId
 from werkzeug.utils import secure_filename
+from urllib.parse import quote_plus
 import base64
 from io import BytesIO
 import os
@@ -12,7 +13,9 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # MongoDB Atlas connection using environment variable or fallback
-MONGO_URI = os.getenv("MONGO_URI", "your-default-fallback-uri")
+username = quote_plus("rshic14")
+password = quote_plus("7WJ2QBIsL4bxZkW2")
+uri = f"mongodb+srv://{username}:{password}@cluster0.cklkufm.mongodb.net/user_auth?retryWrites=true&w=majority&tls=true"
 client = MongoClient(MONGO_URI)
 
 db = client["user_auth"]

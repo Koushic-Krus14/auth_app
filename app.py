@@ -7,10 +7,11 @@ from io import BytesIO
 import os
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
 
+uri = "mongodb+srv://rshic14:7WJ2QBIsL4bxZkW2@cluster0.cklkufm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+# Create a new client and connect to the server
+client = MongoClient(uri)
 # MongoDB Atlas connection
-client = MongoClient("mongodb+srv://rshic14:7WJ2QBIsL4bxZkW2@cluster0.cklkufm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client["user_auth"]
 users_collection = db["users"]
 images_collection = db["images"]

@@ -12,11 +12,11 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # MongoDB Atlas connection using environment variable or fallback
-MONGO_URI = os.getenv("MONGO_URI")
-client = MongoClient(MONGO_URI)
+client = MongoClient("mongodb+srv://rshic14:7WJ2QBIsL4bxZkW2@cluster0.cklkufm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client["user_auth"]
 users_collection = db["users"]
 images_collection = db["images"]
+
 
 @app.route("/")
 def index():

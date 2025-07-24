@@ -2,22 +2,15 @@ from flask import Flask, render_template, request, redirect, session, send_file
 from pymongo import MongoClient
 from bson import ObjectId
 from werkzeug.utils import secure_filename
-from urllib.parse import quote_plus
 import base64
 from io import BytesIO
 import os
 
 app = Flask(__name__)
-
-# Fixed secret key (DO NOT expose this in public repos if used in production)
 app.secret_key = os.urandom(24)
 
-# MongoDB Atlas connection using environment variable or fallback
-username = quote_plus("rshic14")
-password = quote_plus("7WJ2QBIsL4bxZkW2")
-uri = f"mongodb+srv://{username}:{password}@cluster0.cklkufm.mongodb.net/user_auth?retryWrites=true&w=majority&tls=true"
-client = MongoClient(uri)
-
+# MongoDB Atlas connection
+client = MongoClient("mongodb+srv://rshic14:7WJ2QBIsL4bxZkW2@cluster0.cklkufm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client["user_auth"]
 users_collection = db["users"]
 images_collection = db["images"]
@@ -98,7 +91,6 @@ def image(image_id):
     return send_file(BytesIO(base64.b64decode(image_doc["data"])),
                      mimetype=image_doc["content_type"],
                      download_name=image_doc["filename"])
-
+                     
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)

@@ -1,6 +1,10 @@
-import os
-from flask import Flask
+from flask import Flask, render_template, request, redirect, session, send_file
 from pymongo import MongoClient
+from bson import ObjectId
+from werkzeug.utils import secure_filename
+import base64
+from io import BytesIO
+import os
 
 app = Flask(__name__)
 client = MongoClient(os.environ['MONGODB_URI'])  # Get from Render env vars
